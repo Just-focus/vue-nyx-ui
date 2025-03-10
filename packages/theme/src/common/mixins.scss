@@ -1,0 +1,98 @@
+@use "sass:map";
+@forward "function";
+@forward "var";
+@use "function" as *;
+@use "var.scss" as *;
+@use "config.scss" as *;
+
+@mixin set-color() {
+  @each $type in $types {
+    $color: map.get($colors, $type, "base");
+    #{createVarName(('color', $type))}: #{$color};
+  }
+}
+@mixin set-color-light() {
+  @each $type in $types {
+    @for $i from 1 through 9 {
+      $color: map.get($colors, $type, "light-" + $i);
+      #{createVarName(('color', $type, 'light', $i))}: #{$color};
+    }
+  }
+}
+
+@mixin set-global-var() {
+  @each $key, $data in $global {
+    @if $data {
+      // 判断是否存在数据
+      @each $type, $value in $data {
+        #{createVarName(($key, $type))}: #{$value};
+      }
+    }
+  }
+}
+
+// 设置组件的变量
+@mixin set-component-var($name, $var, $varKey: "default") {
+  @each $key, $value in $var {
+    $varName: getVarName($name, $key);
+    $val: map.get($var, $key, $varKey);
+    @if ($val) {
+      #{$varName}: var(#{$val});
+    }
+  }
+}
+
+// 生成block
+@mixin b($block) {
+  $b: "." + $namespace + $connect + $block !global;
+  #{$b} {
+    @content;
+  }
+}
+
+// 后代选择器
+@mixin d($block) {
+  $name: "." + $namespace + $connect + $block;
+  #{$name} {
+    @content;
+  }
+}
+
+// 同级选择器
+@mixin adn($elem) {
+  $name: "+ ." + $namespace + $connect + $elem;
+  #{$name} {
+    @content;
+  }
+}
+
+// 生成elem
+@mixin e($elem) {
+  $name: $b + $element-connect + $elem;
+  @at-root {
+    #{$name} {
+      @content;
+    }
+  }
+}
+
+// 生成修改器
+@mixin m($attr, $value: "") {
+  $modifier: $b + $modifier-connect + $attr + $modifier-value-connect + $value;
+  @at-root {
+    #{$modifier} {
+      @content;
+    }
+  }
+}
+
+// 状态
+@mixin s($attrs, $and: true) {
+  $state: "";
+  @each $attr in $attrs {
+    $state: if($and, "&", "") + "." + $state-prefix + $attr + "," + $state;
+  }
+  #{$state} {
+    @content;
+  }
+}

@@ -1,0 +1,186 @@
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
+
+// type
+$types: primary, success, warning, danger;
+/** colors */
+$colors: () !default;
+// 合并
+$colors: map.deep-merge(
+  (
+    "white": #ffffff,
+    // 白色
+    "black": #000000,
+    // 黑色
+    "primary":
+      (
+        "base": #3069ff,
+      ),
+    // 主要
+    "success":
+      (
+        "base": #14cd70,
+      ),
+    // 成功
+    "warning":
+      (
+        "base": #ffa81a,
+      ),
+    // 警告
+    "danger":
+      (
+        "base": #ff4a5b,
+      ),
+    // 错误
+  ),
+  $colors
+);
+
+// 色调
+$color-white: map.get($colors, "white") !default;
+$color-black: map.get($colors, "black") !default;
+$color-primary: map.get($colors, "primary", "base") !default;
+$color-success: map.get($colors, "success", "base") !default;
+$color-warning: map.get($colors, "warning", "base") !default;
+$color-danger: map.get($colors, "danger", "base") !default;
+/** 
+*   mixin 设置颜色层次 
+*   $type 类型：primary, success, warning, danger
+*   $number 百分比计算值
+*   $mode 标识
+*   $mix-color 混合种颜色
+*/
+@mixin set-color-level($type, $number, $mode: "light", $mix-color) {
+  $colors: map.deep-merge(
+    (
+      $type: (
+        "#{$mode}-#{$number}":
+          color.mix($mix-color, map.get($colors, $type, "base"), $number * 10%),
+      ),
+    ),
+    $colors
+  ) !global;
+}
+
+@each $type in $types {
+  @for $i from 1 through 9 {
+    @include set-color-level($type, $i, "light", $color-white);
+  }
+}
+
+/** 文字颜色 */
+$text-color: () !default;
+$text-color: map.deep-merge(
+  (
+    "primary": #4d5059,
+    // 文字主色
+    "secondary": #7c808c,
+    // 文字辅色
+    "disabled": #abb1bf,
+    // 文字禁用
+    "placeholder": #c9cdd9,
+    // 文字占位
+    "light-8": #f5f6fa,
+    // 文字占位
+    "light-9": #fafbff,
+    // 文字占位
+  ),
+  $text-color
+);
+
+/** 文字尺寸 */
+$font-size: () !default;
+$font-size: map.deep-merge(
+  (
+    "small": 12px,
+    // 小的
+    "default": 14px,
+    // 默认的
+    "large": 16px,
+    // 大的
+  ),
+  $font-size
+);
+
+/** 边框 */
+$border-color: () !default;
+$border-color: map.deep-merge(
+  (
+    "default": #e2e6f1,
+    // 边框默认
+    "disabled": #ebeef5,
+    // 边框禁用
+    "hover": #c9cdd9 // 鼠标悬停,,
+  ),
+  $border-color
+);
+
+/** 组件尺寸 */
+$component-size: () !default;
+$component-size: map.deep-merge(
+  (
+    "small": 24px,
+    // 小的
+    "default": 32px,
+    // 默认的
+    "large": 40px,
+    // 大的
+  ),
+  $component-size
+);
+
+/** 颜色 */
+$color: () !default;
+$color: map.deep-merge(
+  (
+    "white": $color-white,
+    // 白色
+    "black": $color-black,
+    // 黑色
+    "disabled-bg": "#F5F6FA",
+  ),
+  $color
+);
+
+/** 边距 */
+$padding: () !default;
+$padding: map.deep-merge(
+  (
+    "small": 6px,
+    // 小的
+    "default": 10px,
+    // 默认的
+    "large": 10px,
+    // 大的
+  ),
+  $padding
+);
+
+/** 圆角 */
+$round: () !default;
+$round: map.deep-merge(
+  (
+    "default": 4px,
+    "round": 100px,
+  ),
+  $round
+);
+
+/** 全局配置 */
+$global: (
+  "text-color": $text-color,
+  // 文字颜色
+  "font-size": $font-size,
+  // 文字尺寸
+  "border-color": $border-color,
+  // 边框颜色
+  "component-size": $component-size,
+  // 组件尺寸
+  "color": $color,
+  // 背景色
+  "padding": $padding,
+  // 边框
+  "round": $round,
+  // 圆角
+);

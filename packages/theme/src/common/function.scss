@@ -1,0 +1,19 @@
+@use "config.scss" as *;
+
+/** 组合变量名称 */
+@function createVarName($list) {
+  $name: "--" + $namespace; // --拼接前缀
+  @each $item in $list {
+    // each循环
+    @if $item != "" {
+      // 判断不为空时执行
+      $name: $name + "-" + $item; // 开始拼接
+    }
+  }
+  @return $name; // 返回结果
+}
+
+/** 获取变量名称 */
+@function getVarName($args...) {
+  @return createVarName(($args));
+}

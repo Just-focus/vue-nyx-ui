@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -C examples dev",
+    "build": "pnpm -C build start",
+    "build:icons": "pnpm -C build icons",
+    "docs": "pnpm -C docs docs:dev",
+    "docs:build": "pnpm -C docs docs:build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@kerqu-plus/components": "workspace:^",
+    "@kerqu-plus/hook": "workspace:^",
+    "@kerqu-plus/icons": "workspace:^",
+    "@kerqu-plus/theme": "workspace:^",
+    "@kerqu-plus/utils": "workspace:^",
+    "@vueuse/core": "^12.0.0",
+    "async-validator": "^4.2.5",
+    "typescript": "^5.7.2",
+    "vue": "^3.5.13"
+  }
+}

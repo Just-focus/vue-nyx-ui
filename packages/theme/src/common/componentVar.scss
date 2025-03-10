@@ -1,0 +1,201 @@
+@use "function" as *;
+
+// 按钮组件配置
+@function buttonVar($type: "") {
+  $button: (
+    // 默认
+    "border-color":
+      (
+        "default": getVarName("border-color", "default"),
+        "type": getVarName("color", $type),
+      ),
+    "text-color": (
+      "default": getVarName("text-color", "primary"),
+      "type": getVarName("color", "white"),
+    ),
+    "bg-color": (
+      "default": getVarName("color", "white"),
+      "type": getVarName("color", $type),
+    ),
+    "is-link-color": (
+      "default": getVarName("text-color", "primary"),
+      "type": getVarName("color", $type),
+    ),
+    "is-text-color": (
+      "default": getVarName("text-color", "primary"),
+      "type": getVarName("color", $type),
+    ),
+    "is-text-bg-color": (
+      "default": getVarName("color", "white"),
+      "type": getVarName("color", "white"),
+    ),
+    // hover
+    "hover-text-color":
+      (
+        "default": getVarName("color", "primary"),
+        "type": getVarName("color", "white"),
+      ),
+    "hover-bg-color": (
+      "default": getVarName("color", "primary", "light-9"),
+      "type": getVarName("color", $type, "light-3"),
+    ),
+    "hover-border-color": (
+      "default": getVarName("color", "primary", "light-7"),
+      "type": getVarName("color", $type, "light-3"),
+    ),
+    "hover-is-link-color": (
+      "default": getVarName("text-color", "secondary"),
+      "type": getVarName("color", $type, "light-4"),
+    ),
+    "hover-is-text-color": (
+      "default": getVarName("text-color", "primary"),
+      "type": getVarName("color", $type),
+    ),
+    "hover-is-text-bg-color": (
+      "default": getVarName("text-color", "light-8"),
+      "type": getVarName("color", $type, "light-9"),
+    ),
+    // disabled
+    "disabled-text-color":
+      (
+        "default": getVarName("text-color", "disabled"),
+        "type": getVarName("color", "white"),
+      ),
+    "disabled-bg-color": (
+      "default": getVarName("color", "white"),
+      "type": getVarName("color", $type, "light-5"),
+    ),
+    "disabled-border-color": (
+      "default": getVarName("border-color", "disabled"),
+      "type": getVarName("color", $type, "light-5"),
+    ),
+    "disabled-is-link-color": (
+      "default": getVarName("text-color", "disabled"),
+      "type": getVarName("color", $type, "light-5"),
+    ),
+    "disabled-is-text-color": (
+      "default": getVarName("text-color", "disabled"),
+      "type": getVarName("color", $type, "light-5"),
+    ),
+    "disabled-is-text-bg-color": (
+      "default": getVarName("color", "white"),
+      "type": getVarName("color", "white"),
+    ),
+    "size": (
+      "default": getVarName("component-size", "default"),
+    ),
+    "font-size": (
+      "default": getVarName("font-size", "default"),
+    )
+  );
+  @return $button;
+}
+
+// input输入框组件配置
+@function inputVar() {
+  $input: (
+    "text-color": (
+      // 字体颜色
+      "default": getVarName("text-color", "primary"),
+    ),
+    "text-color-aside": (
+      // 字体颜色
+      "default": getVarName("text-color", "secondary"),
+    ),
+    "border-color": (
+      // 边框颜色
+      "default": getVarName("border-color", "default"),
+    ),
+    "bg-color": (
+      // 背景颜色
+      "default": getVarName("color", "white"),
+    ),
+    "bg-color-aside": (
+      // 背景颜色
+      "default": getVarName("color", "disabled-bg"),
+    ),
+    "size": (
+      // 组件尺寸
+      "default": getVarName("component-size", "default"),
+    ),
+    "font-size": (
+      // 文字大小
+      "default": getVarName("font-size", "default"),
+    ),
+    "padding": (
+      // 文字大小
+      "default": getVarName("padding", "default"),
+    ),
+    "round": (
+      // 圆角
+      "default": getVarName("round", "default"),
+    ),
+  );
+  @return $input;
+}
+
+// textarea输入框组件配置
+@function textareaVar() {
+  $textarea: (
+    "text-color": (
+      // 字体颜色
+      "default": getVarName("text-color", "primary"),
+    ),
+    "text-color-aside": (
+      // 字体颜色
+      "default": getVarName("text-color", "secondary"),
+    ),
+    "border-color": (
+      // 边框颜色
+      "default": getVarName("border-color", "default"),
+    ),
+    "bg-color": (
+      // 背景颜色
+      "default": getVarName("color", "white"),
+    ),
+    "bg-color-aside": (
+      // 背景颜色
+      "default": getVarName("color", "disabled-bg"),
+    ),
+    "size": (
+      // 组件尺寸
+      "default": getVarName("component-size", "default"),
+    ),
+    "font-size": (
+      // 文字大小
+      "default": getVarName("font-size", "default"),
+    ),
+    "padding": (
+      // 文字大小
+      "default": getVarName("padding", "default"),
+    ),
+    "round": (
+      // 圆角
+      "default": getVarName("round", "default"),
+    ),
+  );
+  @return $textarea;
+}
+
+// checkbox输入框组件配置
+@function checkboxVar() {
+  $checkbox: (
+    "text-color": (
+      // 字体颜色
+      "default": getVarName("text-color", "primary"),
+    ),
+    "border-color": (
+      // 边框颜色
+      "default": getVarName("border-color", "default"),
+    ),
+    "bg-color": (
+      // 背景颜色
+      "default": getVarName("color", "white"),
+    ),
+    "round": (
+      // 圆角
+      "default": getVarName("round", "default"),
+    ),
+  );
+  @return $checkbox;
+}

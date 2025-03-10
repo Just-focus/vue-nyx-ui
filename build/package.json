@@ -1,0 +1,47 @@
+{
+  "name": "build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "gulp -f gulpfile.js",
+    "icons": "gulp --require @esbuild-kit/cjs-loader -f gulpicons.js"
+  },
+  "keywords": [],
+  "sideEffects": [
+    "*.sass",
+    "*.scss",
+    "*.css"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vite": "^6.0.3",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@esbuild-kit/cjs-loader": "^2.4.4",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "consola": "^3.3.3",
+    "del": "^8.0.0",
+    "fast-glob": "^3.3.2",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "^9.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^6.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.28.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "sass": "^1.83.0"
+  }
+}

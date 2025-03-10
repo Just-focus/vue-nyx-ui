@@ -1,0 +1,13 @@
+@use "./common/var.scss" as *;
+@use "./common/mixins.scss" as *;
+
+:root {
+  // 初始化
+  @include set-global-var();
+}
+:root {
+  // 主色、辅助色
+  @include set-color();
+  // 层次色
+  @include set-color-light();
+}
