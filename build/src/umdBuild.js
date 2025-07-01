@@ -22,7 +22,7 @@ export const umdBuildEntry = async () => {
   writeBundles.write({
     format: "umd",
     file: resolve(outputUmd, "index.umd.js"),
-    name: "KolaUI",
+    name: "NyxUi",
     exports: 'named',
     globals: {
       vue: "Vue",

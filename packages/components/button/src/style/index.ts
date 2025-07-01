@@ -1,2 +1,2 @@
-import "@kerqu-plus/theme/src/init.scss"
-import "@kerqu-plus/theme/src/button.scss"
+import "@nyx-plus/theme/src/init.scss"
+import "@nyx-plus/theme/src/button.scss"

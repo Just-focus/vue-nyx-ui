@@ -8,4 +8,4 @@ export const install = function (app: App) {
 }
 export default install
 // 按需加载
-export * from "@kerqu-plus/components/index"
+export * from "@nyx-plus/components/index"

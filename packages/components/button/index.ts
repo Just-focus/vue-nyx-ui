@@ -1,4 +1,4 @@
-import { withInstall } from "@kerqu-plus/utils";
+import { withInstall } from "@nyx-plus/utils";
 import Button from "./src/index.vue";
 
 // 提供按需加载的方式

@@ -22,7 +22,7 @@ const excludeFiles = (files) => {
 
 // 重写@import路径
 function rollupPluginCompileStyleEntry() {
-  const themeEntryPrefix = `@kerqu-plus/theme/src/`;
+  const themeEntryPrefix = `@nyx-plus/theme/src/`;
   return {
     name: "rollup-plugin-compile-style-entry",
     resolveId(id) {
