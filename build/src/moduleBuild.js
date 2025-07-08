@@ -12,11 +12,12 @@ import {
   outputEsm,
   outputCjs,
   PKG_NAME,
+  PKG_PREFIX
 } from "./common.js";
 
 // 重写@import路径
 function rollupPluginCompileStyleEntry() {
-  const themeEntryPrefix = `@nyx-plus/theme/src/`;
+  const themeEntryPrefix = `${PKG_PREFIX}/theme/src/`;
   return {
     name: "rollup-plugin-compile-style-entry",
     resolveId(id) {
@@ -73,7 +74,7 @@ export const moduleBuildEntry = async () => {
     format: "cjs",
     dir: outputCjs,
     preserveModules: true,
-    entryFileNames: `[name].cjs`,
+    entryFileNames: `[name].js`,
     preserveModulesRoot: npRoot,
     sourcemap: true,
     exports: "named",

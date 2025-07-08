@@ -19,6 +19,7 @@
     "@nyx-plus/icons": "workspace:^",
     "@nyx-plus/theme": "workspace:^",
     "@nyx-plus/utils": "workspace:^",
+    "@vue/shared": "^3.5.17",
     "@vueuse/core": "^12.0.0",
     "async-validator": "^4.2.5",
     "typescript": "^5.7.2",

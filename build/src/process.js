@@ -2,6 +2,7 @@ import { spawn } from "child_process";
 import chalk from "chalk";
 import consola from "consola";
 import { rootDir } from "./common.js";
+import { PKG_PREFIX, PKG_NAME } from "./common.js";
 
 // 自定义每个task的name
 export const withTaskName = (name, fn) => Object.assign(fn, { displayName: name });
@@ -40,3 +41,16 @@ export const run = async (command) =>
     });
     process.on("exit", onProcessExit);
   });
+
+export const pathRewriter = (path) => {
+  return (id) => {
+    id = id.replaceAll(`${PKG_PREFIX}/theme`, `${PKG_NAME}/theme`);
+    id = id.replaceAll(`${PKG_PREFIX}/`, `${path}/`);
+    return id;
+  };
+};
+
+export const runTask = (name) =>
+  withTaskName(`shellTask:${name}`, () =>
+    run(`pnpm run start ${name}`, buildRoot)
+  )

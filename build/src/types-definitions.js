@@ -6,17 +6,7 @@ import glob from "fast-glob";
 import { copy, remove } from "fs-extra";
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import { rootDir, outputEsm, npRoot, distRoot } from "./common.js";
-import { copyTypesDefinitions } from "./files.js";
-import { parallel, series } from "gulp";
-import { run } from './process.js'
-
-// export const pathRewriter = () => {
-//   return (id) => {
-//     id = id.replaceAll(`${PKG_PREFIX}/theme-chalk`, `${PKG_NAME}/theme-chalk`);
-//     id = id.replaceAll(`${PKG_PREFIX}/`, `${outputEsm}/`);
-//     return id;
-//   };
-// };
+import { run, pathRewriter } from './process.js'
 
 export const generateTypesDefinitions = async () => {
   const typesDir = path.join(distRoot, 'types', 'packages')
@@ -86,10 +76,9 @@ export const generateTypesDefinitions = async () => {
     absolute: true,
   });
 
-  console.log("filePaths", filePaths);
   const rewriteTasks = filePaths.map(async (filePath) => {
     const content = await readFile(filePath, "utf8");
-    await writeFile(filePath, content, "utf8");
+    await writeFile(filePath, pathRewriter(outputEsm)(content), 'utf8')
   });
   await Promise.all(rewriteTasks);
 

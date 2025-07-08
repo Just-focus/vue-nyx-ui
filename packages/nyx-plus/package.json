@@ -2,8 +2,9 @@
   "name": "nyx-plus",
   "version": "1.0.0",
   "description": "UI组件库开发",
-  "main": "./lib/index.cjs",
-  "module": "./es/index.mjs",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

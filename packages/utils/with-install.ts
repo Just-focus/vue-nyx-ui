@@ -1,20 +1,43 @@
 // 按需加载组件
-import { Plugin } from "vue";
+import { App, AppContext , Plugin } from "vue";
+import { NOOP } from '@vue/shared'
 
-export type SFCWithInstall<T> = T & Plugin;
-export function withInstall<T>(comp: T) {
-  (comp as SFCWithInstall<T>).install = (app: any) => {
-    const { name } = comp as unknown as { name: string };
-    app.component(name, comp);
-  };
-  return comp as SFCWithInstall<T>;
+export type SFCWithInstall<T> = T & Plugin
+
+export type SFCInstallWithContext<T> = SFCWithInstall<T> & {
+  _context: AppContext | null
 }
 
-// 函数注册
-export const functionInstall = (fn: any, name: any) => {
-  fn.install = (app: any) => {
-    fn._context = app._context;
-    app.config.globalProperties[name] = fn;
-  };
-  return fn;
-};
+export const withInstall = <T, E extends Record<string, any>>(
+  main: T,
+  extra?: E
+) => {
+  (main as SFCWithInstall<T>).install = (app: App): void => {
+    for (const comp of [main, ...Object.values(extra ?? {})]) {
+      app.component(comp.name, comp)
+    }
+  }
+
+  if (extra) {
+    for (const [key, comp] of Object.entries(extra)) {
+      (main as any)[key] = comp
+    }
+  }
+  return main as SFCWithInstall<T> & E
+}
+
+export const withInstallFunction = <T>(fn: T, name: string) => {
+  (fn as SFCWithInstall<T>).install = (app: App) => {
+    (fn as SFCInstallWithContext<T>)._context = app._context
+    app.config.globalProperties[name] = fn
+  }
+
+  return fn as SFCInstallWithContext<T>
+}
+
+
+export const withNoopInstall = <T>(component: T) => {
+  (component as SFCWithInstall<T>).install = NOOP
+
+  return component as SFCWithInstall<T>
+}

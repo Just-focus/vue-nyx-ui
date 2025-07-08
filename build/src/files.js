@@ -1,4 +1,4 @@
-import gulp, { parallel } from "gulp";
+import gulp from "gulp";
 import { deleteAsync } from "del"
 import { resolve } from "path";
 import { copy } from "fs-extra";
@@ -6,13 +6,12 @@ import {
   npRoot,
   iconRoot,
   outputDir,
-  outputUmd,
   outputEsm,
   outputCjs,
   outputDirIcons,
-  distRoot
+  distRoot,
 } from "./common.js";
-import { copyFile, mkdir } from 'fs/promises'
+import { withTaskName } from './process.js';
 
 // 存在包，则先删除
 export const deletePkg = async () => await deleteAsync([outputDir], { force: true });
@@ -38,11 +37,15 @@ export const copyIconPackage = async () => {
 };
 
 // 复制TS定义
-export const copyTypesDefinitions = () => {
+export const copyTypesDefinitions = async () => {
   const src = resolve(distRoot, "types", "packages");
-  const copyTypes = (path) => copy(src, path, { recursive: true });
-
-  return copyTypes(outputEsm);
+  const copyTypes = (module, path) =>
+    withTaskName(`copyTypes:${module}`, () => copy(src, path, { recursive: true }));
+  
+  await Promise.all([
+    copyTypes('esm', outputEsm)(),
+    copyTypes('cjs', outputCjs)()
+  ]);
 };
 
 // export const copyFiles = () =>
@@ -57,3 +60,5 @@ export const copyTypesDefinitions = () => {
 //       path.resolve(epOutput, 'global.d.ts')
 //     ),
 //   ])
+
+
