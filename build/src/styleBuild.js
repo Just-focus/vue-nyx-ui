@@ -34,7 +34,7 @@ const buildScssFull = async () => {
       .pipe(sass.sync()) // 编译
       .pipe(autoprefixer({ cascade: false })) // 兼容
       .pipe(cleanCSS()) // 压缩
-      .pipe(gulpConcat("index.min.css"))
+      .pipe(gulpConcat("index.css"))
       .pipe(gulp.dest(outputUmd)) // dist
       .on("end", resolve); // 监听流完成
   });

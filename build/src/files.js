@@ -1,27 +1,28 @@
-import gulp from "gulp";
-// 删除文件或者文件夹
-import { rimrafSync } from "rimraf";
+import gulp, { parallel } from "gulp";
+import { deleteAsync } from "del"
 import { resolve } from "path";
 import { copy } from "fs-extra";
 import {
+  npRoot,
+  iconRoot,
   outputDir,
-  pkgRoot,
-  rootDir,
+  outputUmd,
   outputEsm,
   outputCjs,
   outputDirIcons,
-  iconRoot,
+  distRoot
 } from "./common.js";
+import { copyFile, mkdir } from 'fs/promises'
 
 // 存在包，则先删除
-export const deletePkg = async () => rimrafSync(outputDir);
-export const deleteIconsPkg = async () => rimrafSync(outputDirIcons);
+export const deletePkg = async () => await deleteAsync([outputDir], { force: true });
+export const deleteIconsPkg = async () => await deleteAsync([outputDirIcons], { force: true });
 
 // 复制package,json
 export const copyPackage = async () => {
   await new Promise((resolve) => {
     gulp
-      .src(`${pkgRoot}/package.json`)
+      .src(`${npRoot}/package.json`)
       .pipe(gulp.dest(`${outputDir}`))
       .on("end", resolve); // 监听流完成
   });
@@ -37,9 +38,22 @@ export const copyIconPackage = async () => {
 };
 
 // 复制TS定义
-export const copyTypesDefinitions = (done) => {
-  const src = resolve(rootDir, "dist", "types", "packages");
+export const copyTypesDefinitions = () => {
+  const src = resolve(distRoot, "types", "packages");
   const copyTypes = (path) => copy(src, path, { recursive: true });
 
-  return Promise.all([copyTypes(outputEsm), copyTypes(outputCjs)]);
+  return copyTypes(outputEsm);
 };
+
+// export const copyFiles = () =>
+//   Promise.all([
+//     copyFile(epPackage, path.join(epOutput, 'package.json')),
+//     copyFile(
+//       path.resolve(projRoot, 'README.md'),
+//       path.resolve(epOutput, 'README.md')
+//     ),
+//     copyFile(
+//       path.resolve(projRoot, 'typings', 'global.d.ts'),
+//       path.resolve(epOutput, 'global.d.ts')
+//     ),
+//   ])

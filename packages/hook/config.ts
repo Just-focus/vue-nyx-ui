@@ -1,1 +1,1 @@
-export const defaultNameSpace = 'a'
+export const defaultNameSpace = 'nyx'

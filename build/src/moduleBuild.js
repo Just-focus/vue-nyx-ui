@@ -1,24 +1,18 @@
 import glob from "fast-glob";
 import { rollup } from "rollup";
+import { resolve } from "path";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import postcss from "rollup-plugin-postcss";
 import vue from "@vitejs/plugin-vue";
 import esbuild from "rollup-plugin-esbuild";
-import typescript from "rollup-plugin-typescript2";
+import typescript from '@rollup/plugin-typescript';
 import {
-  pkgRoot,
-  kpRoot,
+  rootDir,
+  npRoot,
   outputEsm,
   outputCjs,
-  outputPkgDir,
+  PKG_NAME,
 } from "./common.js";
-
-const excludeFiles = (files) => {
-  const excludes = ["node_modules"];
-  return files.filter(
-    (path) => !excludes.some((exclude) => path.includes(exclude))
-  );
-};
 
 // 重写@import路径
 function rollupPluginCompileStyleEntry() {
@@ -26,11 +20,10 @@ function rollupPluginCompileStyleEntry() {
   return {
     name: "rollup-plugin-compile-style-entry",
     resolveId(id) {
-      // 匹配是否满足 @xxx/vc-el.. 开头的字符
       if (!id.startsWith(themeEntryPrefix)) return;
       return {
         // 将 scss 字符替换成 css
-        id: id.replaceAll(themeEntryPrefix, `${outputPkgDir}/theme/`),
+        id: id.replaceAll(themeEntryPrefix, `${PKG_NAME}/theme/`),
         external: "absolute",
       };
     },
@@ -39,20 +32,20 @@ function rollupPluginCompileStyleEntry() {
 
 // 模块打包
 export const moduleBuildEntry = async () => {
-  const input = excludeFiles(
-    await glob("**/*.{js,ts,vue}", {
-      cwd: pkgRoot,
-      absolute: true, // 返回绝对路径
-      onlyFiles: true, // 只返回文件的路径
-    })
-  );
+  const input = await glob("**/*.{js,ts,vue}", {
+    cwd: npRoot,
+    absolute: true,  // 绝对路径
+    onlyFiles: true, // 文件的路径，不需要目录
+  })
 
   const writeBundles = await rollup({
     input, // 配置打包入口文件
     plugins: [
       rollupPluginCompileStyleEntry(),
       vue(),
-      typescript(),
+      typescript({
+        tsconfig: resolve(rootDir, "tsconfig.json"),
+      }),
       nodeResolve({ extensions: [".ts"] }),
       esbuild(),
       postcss({
@@ -61,9 +54,10 @@ export const moduleBuildEntry = async () => {
     ],
     external: [
       // 排除不进行打包的npm包
-      "vue",
-      "@vue/shared",
-      "async-validator",
+      'vue',
+      '@vueuse/core',
+      '@nyx-plus/icons-vue',
+      'async-validator',
     ],
   });
 
@@ -72,7 +66,7 @@ export const moduleBuildEntry = async () => {
     dir: outputEsm,
     preserveModules: true,
     entryFileNames: `[name].mjs`,
-    preserveModulesRoot: kpRoot,
+    preserveModulesRoot: npRoot,
     sourcemap: true,
   });
   writeBundles.write({
@@ -80,7 +74,7 @@ export const moduleBuildEntry = async () => {
     dir: outputCjs,
     preserveModules: true,
     entryFileNames: `[name].cjs`,
-    preserveModulesRoot: kpRoot,
+    preserveModulesRoot: npRoot,
     sourcemap: true,
     exports: "named",
   });

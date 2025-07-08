@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es2018",
+    "module": "esnext",
+    "baseUrl": ".",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "allowJs": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "rootDir": ".",
+    "types": [],
+    "paths": {
+      "@nyx-plus/components": ["packages/components"],
+      "@nyx-plus/components/*": ["packages/components/*"],
+      "@nyx-plus/utils": ["packages/utils"],
+      "@nyx-plus/utils/*": ["packages/utils/*"],
+      "@nyx-plus/hooks": ["packages/hooks"],
+      "@nyx-plus/directives": ["packages/directives"],
+      "@nyx-plus/constants": ["packages/constants"],
+      "@nyx-plus/locale": ["packages/locale"],
+      "@nyx-plus/locale/*": ["packages/locale/*"],
+      "nyx-plus": ["packages/nyx-plus"]
+    },
+    "preserveSymlinks": true
+  }
+}

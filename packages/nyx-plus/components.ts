@@ -1,5 +1,6 @@
-import { AButton } from "@nyx-plus/components/button/index";
+import { NlButton } from "@nyx-plus/components/button";
+import type { Plugin } from 'vue'
 
-const components = [AButton];
-
-export default components
+export default [
+  NlButton
+] as Plugin[]

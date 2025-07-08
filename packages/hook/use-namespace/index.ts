@@ -18,7 +18,7 @@ const generateBEMClass = ({
   element = "",
   modifier = "",
   modifierValue = "",
-}) => {
+}: any) => {
   return [
     `${namespace}-${block}`,
     blockSuffix && `-${blockSuffix}`,
@@ -35,7 +35,7 @@ const generateBEMClass = ({
  * @param {string} block 块名称
  * @returns {object} 命名空间的工具函数集合
  */
-export const useNameSpace = (block) => {
+export const useNameSpace = (block: any) => {
   const namespace = defaultNameSpace;
 
   /**
@@ -71,7 +71,7 @@ export const useNameSpace = (block) => {
    * @param {boolean} state 状态是否启用
    * @returns {string} 生成的类名
    */
-  const is = (name, state) => (name && state ? `is-${name}` : "");
+  const is = (name: string, state: boolean) => (name && state ? `is-${name}` : "");
 
   return { namespace, b, e, m, is };
 };

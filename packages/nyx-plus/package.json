@@ -1,15 +1,32 @@
 {
   "name": "nyx-plus",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "UI组件库开发",
+  "main": "./lib/index.cjs",
+  "module": "./es/index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "UI组件库",
-    "Vue"
+    "nyx-plus",
+    "nyx",
+    "component library",
+    "ui framework",
+    "ui",
+    "vue"
+  ],
+  "sideEffects": [
+    "dist/*",
+    "theme/**/*.css",
+    "theme/src/**/*.scss",
+    "es/components/*/style/*",
+    "lib/components/*/style/*"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "browserslist": [
+    "> 1%",
+    "not ie 11",
+    "not op_mini all"
+  ]
 }
